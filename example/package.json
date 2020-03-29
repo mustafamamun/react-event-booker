@@ -1,13 +1,13 @@
 {
-  "name": "react-calendar-example",
+  "name": "react-basic-calendar",
   "homepage": "https://mustafamamun.github.io/react-calendar",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "dependencies": {
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
     "react-scripts": "^1.1.4",
     "react-calendar": "link:.."
   },

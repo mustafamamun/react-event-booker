@@ -1,6 +1,6 @@
 {
-  "name": "react-calendar",
-  "version": "1.0.0",
+  "name": "react-calendar-basic",
+  "version": "0.0.4",
   "description": "Simple react calendar",
   "author": "mustafamamun",
   "license": "MIT",
@@ -21,10 +21,22 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
+  "dependencies": {
+    "date-fns": "^2.11.0",
+    "lodash": "^4.17.15",
+    "react-use": "^13.27.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2"
+  },
   "peerDependencies": {
+    "date-fns": "^2.11.0",
+    "lodash": "^4.17.15",
     "prop-types": "^15.5.4",
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-use": "^13.27.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
@@ -53,7 +65,8 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^1.6.2",
-    "rollup-plugin-url": "^1.4.0"
+    "rollup-plugin-url": "^1.4.0",
+    "rollup-plugin-copy": "^3.3.0"
   },
   "files": [
     "dist"

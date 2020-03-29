@@ -1,5 +1,10 @@
 {
   "env": {
     "jest": true
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "indent": "off",
+    "react/jsx-indent": "off"
   }
 }
