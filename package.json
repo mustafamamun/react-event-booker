@@ -4,7 +4,7 @@
   "description": "Simple react calendar",
   "author": "mustafamamun",
   "license": "MIT",
-  "repository": "mustafamamun/react-calendar-library",
+  "repository": "mustafamamun/react-basic-calendar",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
