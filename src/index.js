@@ -42,7 +42,7 @@ Calendar.prototype = {
   onSelect: PropTypes.func.isRequired,
   onNavigation: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
-  prototype: PropTypes.string
+  defaultView: PropTypes.oneOf(['month', 'day', 'week', 'agenda'])
 }
 
 export default Calendar

@@ -15,7 +15,7 @@ import {
 } from 'date-fns'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import { getDate } from 'date-fns/esm'
-import { isEmpty, sortBy, slice, flow, get } from 'lodash'
+import { isEmpty, sortBy, slice, flow, get, omit } from 'lodash'
 
 import WeekRow from '../week-row/WeekRow'
 import { CalContext } from '../../context/Context'
@@ -169,7 +169,7 @@ const Month = ({ currentTime, events, onSelect, onClickedEvent }) => {
                   <div
                     onMouseDown={event => {
                       event.stopPropagation()
-                      onEventClicked(e)
+                      onEventClicked(omit(e, 'calprops'))
                     }}
                     className={`evt-base ${
                       isEventStartOnDay(e, day) ? 'event-start' : ''
