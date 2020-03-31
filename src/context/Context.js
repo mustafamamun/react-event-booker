@@ -16,17 +16,17 @@ export const Context = ({ defaultView = 'month', ...rest }) => {
   )
   const [viewWindow, setViewWindow] = useState({
     start:
-      defaultView === 'month' || 'agenda'
-        ? flow(startOfMonth, startOfWeek)(new Date())
+      defaultView === 'day'
+        ? startOfDay(new Date())
         : view === 'week'
         ? startOfWeek(new Date())
-        : startOfDay(new Date()),
+        : flow(startOfMonth, startOfWeek)(new Date()),
     end:
-      defaultView === 'month' || 'agenda'
-        ? flow(endOfMonth, endOfWeek)(new Date())
+      defaultView === 'day'
+        ? endOfDay(new Date())
         : view === 'week'
         ? endOfWeek(new Date())
-        : endOfDay(new Date())
+        : flow(endOfMonth, endOfWeek)(new Date())
   })
 
   return (
