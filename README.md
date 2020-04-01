@@ -46,6 +46,18 @@ This is a event based calendar for react
     }
     export  default  App
 
+# Props
+
+| Prop           | Required | Type     | Description                                                                     |
+| -------------- | -------- | -------- | ------------------------------------------------------------------------------- |
+| onNavigation   | True     | Function | Callback funciton triggered when navigation happens                             |
+| onNavigation   | True     | Function | Callback funciton triggered when navigation happens                             |
+| onViewChange   | True     | Function | Callback funciton triggered on view change                                      |
+| onSelect       | True     | Function | Calback function triggered when selection ends                                  |
+| onClickedEvent | True     | Function | Calback function triggered when selection ends                                  |
+| events         | True     | Array    | Array of event object. Event object = {start: Date , end: Date, title: String } |
+| default view   | false    | Enum     | One of 'month', 'day', 'week', 'agenda'                                         |  |
+
 # TO DO
 
-    Disable days and hour from the calendar
+    Disable days and hours from the calendar, user style input
