@@ -15,7 +15,8 @@ import {
   getEventOfTheSlot,
   getEventTime,
   getHight,
-  lastSlotOfTheDayAndOcupied
+  lastSlotOfTheDayAndOcupied,
+  ifSlotSelected
 } from '../utils'
 
 const HalfAnHourSlot = ({
@@ -25,6 +26,8 @@ const HalfAnHourSlot = ({
   events,
   onClickEvent,
   highestIndex,
+  onMouseOver,
+  id,
   ...rest
 }) => {
   const currentTiemBarStyle = {
@@ -99,13 +102,18 @@ const HalfAnHourSlot = ({
   }
 
   return (
-    <div {...rest}>
-      {isSameMinute(slotStart, selectedWindow.start) && (
-        <div className={'show-selection'}>
-          <div>{format(selectedWindow.start, 'dd-MM-yy, HH:mm')} -</div>
-          <div>{format(selectedWindow.end, 'dd-MM-yy, HH:mm')}</div>
-        </div>
-      )}
+    <div {...rest} onMouseOver={onMouseOver} id={id}>
+      {ifSlotSelected(slotStart, selectedWindow) &&
+        isSameMinute(selectedWindow.end, addMinutes(slotStart, 29)) && (
+          <div className={'show-selection'}>
+            <div>{format(selectedWindow.start, 'dd-MM-yy, HH:mm')} -</div>
+            <div>{format(selectedWindow.end, 'dd-MM-yy, HH:mm')}</div>
+          </div>
+        )}
+      {ifSlotSelected(slotStart, selectedWindow) &&
+        !isSameMinute(selectedWindow.end, addMinutes(slotStart, 29)) && (
+          <div className={'show-selection'}></div>
+        )}
       {isWithinInterval(currentTime, {
         start: slotStart,
         end: addMinutes(slotStart, 30)
@@ -117,6 +125,7 @@ const HalfAnHourSlot = ({
       {eventsOfTheSlot.map((e, i) => {
         return (
           <div
+            onMouseOver={() => onMouseOver({ target: { id } })}
             key={`${e.start}${slotStart}${e.title}${i}`}
             style={eventStyle(e)}
             className={`evnet-basic-slot ${
