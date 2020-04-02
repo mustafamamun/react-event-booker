@@ -67,7 +67,7 @@
 }
 
 .disable {
-  background-color: #e6e6e6;
+  background-color: #f5f4e8;
   cursor: not-allowed;
   pointer-events: none;
 }

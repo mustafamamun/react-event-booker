@@ -7,7 +7,7 @@ import Nav from './components/nav/Nav'
 import Views from './components/views/IndexView'
 
 import 'semantic-ui-css/semantic.min.css'
-import './styles.css'
+import './style/styles.css'
 
 function Calendar({
   events = [],
@@ -15,7 +15,9 @@ function Calendar({
   onSelect,
   onNavigation,
   onViewChange,
-  defaultView = 'month'
+  defaultView = 'month',
+  disabledDays = [],
+  disabledHours = []
 }) {
   const [currentTime, setCurrentTime] = useState(new Date())
   useInterval(() => {
@@ -30,6 +32,8 @@ function Calendar({
           events={events}
           onSelect={onSelect}
           onClickedEvent={onClickedEvent}
+          disabledDays={disabledDays}
+          disabledHours={disabledHours}
         />
       </Container>
     </Context>
@@ -42,7 +46,42 @@ Calendar.prototype = {
   onSelect: PropTypes.func.isRequired,
   onNavigation: PropTypes.func.isRequired,
   onViewChange: PropTypes.func.isRequired,
-  defaultView: PropTypes.oneOf(['month', 'day', 'week', 'agenda'])
+  defaultView: PropTypes.oneOf(['month', 'day', 'week', 'agenda']),
+  disabledDays: PropTypes.oneOf([
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat'
+  ]),
+  disabledHours: PropTypes.oneOf([
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ])
 }
 
 export default Calendar

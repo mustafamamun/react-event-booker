@@ -37,7 +37,7 @@ export default {
     resolve(),
     commonjs(),
     copy({
-      targets: [{ src: 'src/styles.css', dest: 'dist/style/' }]
+      targets: [{ src: 'src/style/styles.css', dest: 'dist/style/' }]
     })
   ]
 }
