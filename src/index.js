@@ -34,7 +34,6 @@ function Calendar({
       <Container className={'mt-5'}>
         <Nav onNavigation={onNavigation} onViewChange={onViewChange} />
         <Views
-          currentTime={currentTime}
           events={coloredEvent}
           onSelect={onSelect}
           onClickedEvent={onClickedEvent}
