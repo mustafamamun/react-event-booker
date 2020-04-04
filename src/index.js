@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Container } from 'semantic-ui-react'
-import { useInterval } from 'react-use'
 import PropTypes from 'prop-types'
 import { Context } from './context/Context'
 import Nav from './components/nav/Nav'
 import Views from './components/views/IndexView'
+import { getRandomColor, invertColor } from './components/utils'
 
 import 'semantic-ui-css/semantic.min.css'
 import './style/styles.css'
@@ -19,17 +19,23 @@ function Calendar({
   disabledDays = [],
   disabledHours = []
 }) {
-  const [currentTime, setCurrentTime] = useState(new Date())
-  useInterval(() => {
-    setCurrentTime(new Date())
-  }, 5 * 60 * 1000)
+  const coloredEvent = events.map(e => {
+    const color = getRandomColor()
+    return {
+      ...e,
+      calprops: {
+        bgColor: color,
+        color: invertColor(color)
+      }
+    }
+  })
   return (
     <Context defaultView={defaultView}>
       <Container className={'mt-5'}>
         <Nav onNavigation={onNavigation} onViewChange={onViewChange} />
         <Views
           currentTime={currentTime}
-          events={events}
+          events={coloredEvent}
           onSelect={onSelect}
           onClickedEvent={onClickedEvent}
           disabledDays={disabledDays}
