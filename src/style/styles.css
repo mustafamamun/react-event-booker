@@ -284,7 +284,6 @@
   line-height: normal;
   overflow: hidden;
   font-family: 'Times New Roman';
-  pointer-events: none;
 }
 
 .dst-div {
