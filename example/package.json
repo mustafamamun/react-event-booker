@@ -1,6 +1,6 @@
 {
-  "name": "react-basic-calendar",
-  "homepage": "https://mustafamamun.github.io/react-calendar",
+  "name": "react-calendar-basic",
+  "homepage": "https://mustafamamun.github.io/react-calendar-basic",
   "version": "1.0.0",
   "license": "MIT",
   "private": false,
@@ -8,8 +8,9 @@
     "prop-types": "^15.6.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-calendar-basic": "link:..",
     "react-scripts": "^1.1.4",
-    "react-calendar": "link:.."
+    "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,7 +22,6 @@
     "minimist": "^1.2.2",
     "mem": "^4.0.0",
     "eslint": "^4.18.2",
-    "js-yaml": "^3.13.1",
-    "webpack-dev-server": "^3.1.11"
+    "js-yaml": "^3.13.1"
   }
 }

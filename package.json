@@ -4,7 +4,7 @@
   "description": "Simple react calendar",
   "author": "mustafamamun",
   "license": "MIT",
-  "repository": "mustafamamun/react-basic-calendar",
+  "repository": "mustafamamun/react-calendar-basic",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
@@ -27,7 +27,7 @@
     "mem": "^4.0.0",
     "eslint": "^4.18.2",
     "js-yaml": "^3.13.1",
-    "webpack-dev-server": "^3.1.11"
+    "webpack-dev-server": "3.10.3"
   },
   "dependencies": {
     "date-fns": "^2.11.0",
@@ -66,8 +66,6 @@
     "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.1.0",
     "gh-pages": "^1.2.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
     "react-scripts": "^1.1.4",
     "rollup": "^0.64.1",
     "rollup-plugin-babel": "^3.0.7",
