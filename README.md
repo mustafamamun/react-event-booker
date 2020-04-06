@@ -68,7 +68,7 @@ Event based calendar for react that allows disabling specific hour or day.
 
 # Release Note
 
-### Version 0.0.15
+### Version 0.0.19
 
-1. Bug fixed on event position calculation
-2. Colouring of event
+1. Code refactoring
+2. Small bug fix

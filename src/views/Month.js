@@ -8,15 +8,15 @@ import {
   isSameDay,
   endOfDay,
   isValid,
-  format
+  format,
 } from 'date-fns'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import { getDate } from 'date-fns/esm'
 import { isEmpty, get, omit, sortBy, cloneDeep } from 'lodash'
 import ReactTooltip from 'react-tooltip'
 
-import WeekRow from '../week-row/WeekRow'
-import { CalContext } from '../../context/Context'
+import WeekRow from '../components/week-row/WeekRow'
+import { CalContext } from '../context/Context'
 import {
   getEventsOfTheDay,
   isDayDisabled,
@@ -26,7 +26,7 @@ import {
   isEventEndOnDay,
   ifDayIsInDisabledArray,
   getEventWithIndex,
-  getHighestIndex
+  getHighestIndex,
 } from '../utils'
 
 const Month = ({
@@ -34,29 +34,29 @@ const Month = ({
   events,
   onSelect,
   onClickedEvent,
-  disabledDays = []
+  disabledDays = [],
 }) => {
   const { viewWindow, setViewWindow, setView } = useContext(CalContext)
   const [dayWidth, setDayWidth] = useState(0)
   const eachDay = eachDayOfInterval({ ...viewWindow })
 
   const [selectedWindow, setSelectedWindow] = useState({})
-  const onMouseClick = e => {
+  const onMouseClick = (e) => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
         start: new Date(e.target.id),
-        end: endOfDay(new Date(e.target.id))
+        end: endOfDay(new Date(e.target.id)),
       })
     }
   }
-  const onMouseUp = e => {
+  const onMouseUp = (e) => {
     if (!isEmpty(selectedWindow)) {
       onSelect(selectedWindow)
       setSelectedWindow({})
     }
   }
-  const onMouseOver = e => {
+  const onMouseOver = (e) => {
     if (
       !isEmpty(selectedWindow) &&
       isValid(new Date(e.target.id)) &&
@@ -64,7 +64,7 @@ const Month = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfDay(new Date(e.target.id))
+        end: endOfDay(new Date(e.target.id)),
       })
     }
     if (
@@ -74,7 +74,7 @@ const Month = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfDay(selectedWindow.start)
+        end: endOfDay(selectedWindow.start),
       })
     }
   }
@@ -103,7 +103,7 @@ const Month = ({
     )
   }
 
-  const ifSlotSelected = slotStart => {
+  const ifSlotSelected = (slotStart) => {
     return (
       !isEmpty(selectedWindow) &&
       (isSameMinute(slotStart, selectedWindow.start) ||
@@ -112,12 +112,12 @@ const Month = ({
     )
   }
 
-  const onMoreClicked = day => {
+  const onMoreClicked = (day) => {
     setViewWindow({ start: startOfDay(day), end: endOfDay(day) })
     setView('day')
   }
 
-  const onEventClicked = e => {
+  const onEventClicked = (e) => {
     onClickedEvent(e)
   }
 
@@ -126,7 +126,7 @@ const Month = ({
       width: !isSameDay(e.end, day) ? '102%' : '92%',
       backgroundColor: e.calprops.bgColor,
       top: `${(150 / 4) * e.calprops.position + 10}px`,
-      color: e.calprops.color
+      color: e.calprops.color,
     }
   }
   const mutableEvents = cloneDeep(events)
@@ -135,7 +135,7 @@ const Month = ({
     <Grid columns={7}>
       <WeekRow />
       <GridRow className={'pt-0'}>
-        {eachDay.map(day => {
+        {eachDay.map((day) => {
           const date = getDate(day)
           const eventsOfTheDay = sortBy(
             getEventsOfTheDay(day, mutableEvents),
@@ -150,7 +150,7 @@ const Month = ({
               : 1
 
           const eventToShow = eventsOfTheDay.filter(
-            e => e.calprops.position <= heighestIndex
+            (e) => e.calprops.position <= heighestIndex
           )
           const remainingEvents = eventsOfTheDay.length - eventToShow.length
           return (
@@ -180,7 +180,7 @@ const Month = ({
                   {eventToShow.map((e, i) => {
                     return (
                       <div
-                        onMouseDown={event => {
+                        onMouseDown={(event) => {
                           event.stopPropagation()
                           onEventClicked(omit(e, 'calprops'))
                         }}
@@ -202,7 +202,7 @@ const Month = ({
                                 e,
                                 dayWidth,
                                 disabledDays
-                              )}px`
+                              )}px`,
                             }}
                           >
                             <ReactTooltip
@@ -226,7 +226,7 @@ const Month = ({
               {remainingEvents > 0 && (
                 <div
                   className={'more-events-link'}
-                  onMouseDown={event => {
+                  onMouseDown={(event) => {
                     event.stopPropagation()
                     onMoreClicked(day)
                   }}
@@ -237,7 +237,6 @@ const Month = ({
             </GridColumn>
           )
         })}
-        )}
       </GridRow>
     </Grid>
   )

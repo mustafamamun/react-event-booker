@@ -3,13 +3,13 @@ import { Grid, GridRow, GridColumn } from 'semantic-ui-react'
 import { addMinutes, isBefore, isSameDay, endOfMinute, isValid } from 'date-fns'
 import { isEmpty, sortBy, cloneDeep } from 'lodash'
 
-import TimeSlotsInDay from '../time-slots-in-day/TimeSlotsInDay'
-import { CalContext } from '../../context/Context'
+import TimeSlotsInDay from '../components/time-slots-in-day/TimeSlotsInDay'
+import { CalContext } from '../context/Context'
 import {
   timeSlots,
   getEventsOfTheDay,
   getEventIndex,
-  getHighestIndex
+  getHighestIndex,
 } from '../utils'
 
 const Day = ({
@@ -18,27 +18,27 @@ const Day = ({
   onSelect,
   onClickedEvent,
   disabledDays = [],
-  disabledHours = []
+  disabledHours = [],
 }) => {
   const { viewWindow } = useContext(CalContext)
   const [selectedWindow, setSelectedWindow] = useState({})
-  const onMouseClick = e => {
+  const onMouseClick = (e) => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
         start: new Date(e.target.id),
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
       })
     }
   }
-  const onMouseUp = e => {
+  const onMouseUp = (e) => {
     if (!isEmpty(selectedWindow)) {
       onSelect(selectedWindow)
       setSelectedWindow({})
     }
   }
 
-  const onMouseOver = e => {
+  const onMouseOver = (e) => {
     if (
       !isEmpty(selectedWindow) &&
       isValid(new Date(e.target.id)) &&
@@ -46,7 +46,7 @@ const Day = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
       })
     }
     if (
@@ -56,11 +56,11 @@ const Day = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(selectedWindow.start, 29))
+        end: endOfMinute(addMinutes(selectedWindow.start, 29)),
       })
     }
   }
-  const onClickEvent = e => {
+  const onClickEvent = (e) => {
     onClickedEvent(e)
   }
   const mutableEvents = cloneDeep(events)

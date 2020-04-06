@@ -1,7 +1,7 @@
 import React from 'react'
 import { addHours, startOfMinute, addMinutes, subHours } from 'date-fns'
 import HalfAnHourSlot from './HalfAnHourSlot'
-import { isSlotDisabled } from '../utils'
+import { isSlotDisabled } from '../../utils'
 
 const HourSlot = ({
   day,
@@ -15,7 +15,7 @@ const HourSlot = ({
   onClickEvent,
   highestIndex,
   disabledDays,
-  disabledHours
+  disabledHours,
 }) => {
   const startTZO = day.getTimezoneOffset()
   const endDate = addHours(day, hour)

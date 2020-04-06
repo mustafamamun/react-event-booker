@@ -5,20 +5,20 @@ import {
   isBefore,
   isSameDay,
   endOfMinute,
-  isValid
+  isValid,
 } from 'date-fns'
 import { isEmpty, cloneDeep, sortBy } from 'lodash'
 
-import { CalContext } from '../../context/Context'
-import WeekRowWithDate from '../week-row/WeekRowWithDate'
+import { CalContext } from '../context/Context'
+import WeekRowWithDate from '../components/week-row/WeekRowWithDate'
 import { Grid, GridRow, GridColumn } from 'semantic-ui-react'
 import {
   timeSlots,
   getEventsOfTheDay,
   getEventIndex,
-  getHighestIndex
+  getHighestIndex,
 } from '../utils'
-import TimeSlotsInDay from '../time-slots-in-day/TimeSlotsInDay'
+import TimeSlotsInDay from '../components/time-slots-in-day/TimeSlotsInDay'
 
 const Week = ({
   currentTime,
@@ -26,30 +26,30 @@ const Week = ({
   onSelect,
   onClickedEvent,
   disabledDays = [],
-  disabledHours = []
+  disabledHours = [],
 }) => {
   const { viewWindow } = useContext(CalContext)
   const [selectedWindow, setSelectedWindow] = useState({})
-  const onMouseClick = e => {
+  const onMouseClick = (e) => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
         start: new Date(e.target.id),
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
       })
     }
   }
   const eachDayInWeek = eachDayOfInterval({
     start: viewWindow.start,
-    end: viewWindow.end
+    end: viewWindow.end,
   })
-  const onMouseUp = e => {
+  const onMouseUp = (e) => {
     if (!isEmpty(selectedWindow)) {
       onSelect(selectedWindow)
       setSelectedWindow({})
     }
   }
-  const onMouseOver = e => {
+  const onMouseOver = (e) => {
     if (
       !isEmpty(selectedWindow) &&
       isValid(new Date(e.target.id)) &&
@@ -57,7 +57,7 @@ const Week = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
       })
     }
     if (
@@ -67,11 +67,11 @@ const Week = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(selectedWindow.start, 29))
+        end: endOfMinute(addMinutes(selectedWindow.start, 29)),
       })
     }
   }
-  const onClickEvent = e => {
+  const onClickEvent = (e) => {
     onClickedEvent(e)
   }
   const mutableEvents = cloneDeep(events)
@@ -81,7 +81,7 @@ const Week = ({
       <WeekRowWithDate allDates={eachDayInWeek} />
       <GridRow className={'scroll-box pt-0 pb-0'}>
         <GridColumn className={'pr-0 pl-0'}>
-          {timeSlots.map(time => {
+          {timeSlots.map((time) => {
             return (
               <GridRow key={time} className={'time-slot'}>
                 <b>{time}</b>
@@ -89,7 +89,7 @@ const Week = ({
             )
           })}
         </GridColumn>
-        {eachDayInWeek.map(day => {
+        {eachDayInWeek.map((day) => {
           const eventsOfTheDay = sortBy(
             getEventsOfTheDay(day, mutableEvents),
             'start'

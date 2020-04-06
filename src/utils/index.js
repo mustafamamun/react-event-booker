@@ -19,7 +19,12 @@ import {
   startOfMonth,
   startOfWeek,
   subDays,
-  subMinutes
+  subMinutes,
+  addWeeks,
+  addMonths,
+  addDays,
+  subWeeks,
+  subMonths,
 } from 'date-fns'
 import {
   isEmpty,
@@ -30,7 +35,7 @@ import {
   sortBy,
   range,
   find,
-  get
+  get,
 } from 'lodash'
 
 export const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -42,7 +47,7 @@ export const daysFullInWeek = [
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday'
+  'Saturday',
 ]
 
 export const months = [
@@ -57,7 +62,7 @@ export const months = [
   'September',
   'October',
   'November',
-  'December'
+  'December',
 ]
 
 export const timeSlots = [
@@ -84,14 +89,21 @@ export const timeSlots = [
   '20:00',
   '21:00',
   '22:00',
-  '23:00'
+  '23:00',
 ]
 
 export const colors = {
-  warning: '#f07810'
+  warning: '#f07810',
 }
+export const addOneWeek = (date) => addWeeks(date, 1)
+export const addOneMonth = (date) => addMonths(date, 1)
+export const addOneDay = (date) => addDays(date, 1)
+export const subOneWeek = (date) => subWeeks(date, 1)
+export const subOneMonth = (date) => subMonths(date, 1)
+export const subOneDay = (date) => subDays(date, 1)
+
 export const getEventsOfTheDay = (day, events) => {
-  return events.filter(e => {
+  return events.filter((e) => {
     return (
       isSameSecond(day, e.start) ||
       (isAfter(startOfDay(day), e.start) &&
@@ -105,7 +117,7 @@ export const getEventsOfTheDay = (day, events) => {
 }
 
 export const getEventOfTheWindow = (events, window) => {
-  return events.filter(e => {
+  return events.filter((e) => {
     return (
       isSameSecond(window.start, e.start) ||
       (isAfter(window.start, e.start) &&
@@ -129,7 +141,7 @@ export const getEventIndex = (events, day) => {
   }
 }
 
-export const getHighestIndex = e => {
+export const getHighestIndex = (e) => {
   return isEmpty(e)
     ? 0
     : e.reduce((prev, current) =>
@@ -139,7 +151,7 @@ export const getHighestIndex = e => {
 
 export const getEventOfTheSlot = (slotStart, events) => {
   const slotEnd = endOfMinute(addMinutes(slotStart, 29))
-  return events.filter(e => {
+  return events.filter((e) => {
     return (
       isSameSecond(slotStart, e.start) ||
       (isAfter(slotStart, e.start) &&
@@ -154,7 +166,7 @@ export const getEventOfTheSlot = (slotStart, events) => {
   })
 }
 
-export const addLeadingZero = value => {
+export const addLeadingZero = (value) => {
   return value >= 10 ? value : `0${value}`
 }
 
@@ -163,7 +175,7 @@ export const getEventEndTimeForDay = (e, slotStart, disabledHours) => {
   let dayEnd
   let eventEnd
   const nextDisableHour = sortBy(disabledHours).filter(
-    i => i > getHours(slotStart)
+    (i) => i > getHours(slotStart)
   )[0]
   if (nextDisableHour) {
     disableHour = `${addLeadingZero(nextDisableHour)} : 00`
@@ -196,7 +208,7 @@ export const getHightEventDetails = (start, end, slotStart, disabledHours) => {
   let diffToDisableHour
   const startTime = isBefore(start, slotStart) ? slotStart : start
   const nextDisableHour = sortBy(disabledHours).filter(
-    i => i > getHours(slotStart)
+    (i) => i > getHours(slotStart)
   )[0]
   if (nextDisableHour) {
     diffToDisableHour =
@@ -278,7 +290,7 @@ export const isEventStartOnDay = (e, day) => {
     isSameMinute(startOfDay(day), e.start) ||
     isWithinInterval(e.start, {
       start: startOfDay(day),
-      end: endOfDay(day)
+      end: endOfDay(day),
     })
   )
 }
@@ -288,7 +300,7 @@ export const isEventEndOnDay = (e, day) => {
     isSameMinute(endOfDay(day), e.end) ||
     isWithinInterval(e.end, {
       start: startOfDay(day),
-      end: endOfDay(day)
+      end: endOfDay(day),
     })
   )
 }
@@ -315,16 +327,16 @@ export const findDistanceToNextDisableDay = (day, disabledDays) => {
     return null
   }
   const sortedDisabledDaysIndex = disabledDays
-    .map(i => indexOf(daysInWeek, i))
+    .map((i) => indexOf(daysInWeek, i))
     .sort()
-  const nextDisableDays = sortedDisabledDaysIndex.filter(i => i > getDay(day))
+  const nextDisableDays = sortedDisabledDaysIndex.filter((i) => i > getDay(day))
   if (isEmpty(nextDisableDays)) {
     return null
   }
   return nextDisableDays[0] - getDay(day)
 }
 
-export const findDistanceToEndofWeek = day => {
+export const findDistanceToEndofWeek = (day) => {
   return getDay(endOfWeek(day)) - getDay(day) + 1
 }
 
@@ -337,7 +349,7 @@ export const getEventWidth = (day, e, dayWidth, disabledDays) => {
     compact([
       findDistanceToNextDisableDay(day, disabledDays),
       findDistanceToEndofWeek(day),
-      findDistanceToEndofEvent(e, day)
+      findDistanceToEndofEvent(e, day),
     ])
   )[0]
   return (dayWidth - 20) * distance
@@ -363,7 +375,7 @@ export const isEventStartOnSlot = (e, slotStart) => {
     isSameSecond(slotStart, e.start) ||
     isWithinInterval(e.start, {
       start: slotStart,
-      end: addMinutes(slotStart, 30)
+      end: addMinutes(slotStart, 30),
     })
   )
 }
@@ -372,14 +384,14 @@ export const isEventEndOnSlot = (e, slotStart) => {
     isSameSecond(addMinutes(slotStart, 30), e.end) ||
     isWithinInterval(e.end, {
       start: slotStart,
-      end: addMinutes(slotStart, 30)
+      end: addMinutes(slotStart, 30),
     })
   )
 }
 
-export const getEventWithIndex = events => {
+export const getEventWithIndex = (events) => {
   const eventsWithIndex = []
-  const getHighestIndex = events => {
+  const getHighestIndex = (events) => {
     return get(
       events.reduce((prev, current) =>
         get(prev, 'calprops.position', 0) > get(current, 'calprops.position', 0)
@@ -405,7 +417,7 @@ export const getEventWithIndex = events => {
       eventsWithIndex.push(e)
     } else if (getHighestIndex(eventsWithIndex) >= i) {
       const missingIndex = range(eventsWithIndex.length).filter((e, i) => {
-        return !find(eventsWithIndex, iE => {
+        return !find(eventsWithIndex, (iE) => {
           return iE.calprops.position === e
         })
       })
@@ -424,7 +436,7 @@ export const getRandomColor = () => {
   return color
 }
 
-export const invertColor = hexcolor => {
+export const invertColor = (hexcolor) => {
   const color = hexcolor.substring(1)
   const r = parseInt(color.substr(0, 2), 16)
   const g = parseInt(color.substr(2, 2), 16)

@@ -5,7 +5,7 @@ import {
   format,
   isWithinInterval,
   addMinutes,
-  differenceInMinutes
+  differenceInMinutes,
 } from 'date-fns'
 import { omit, isEmpty } from 'lodash'
 
@@ -18,8 +18,8 @@ import {
   ifSlotIsInDisabledTime,
   showEventData,
   isEventStartOnSlot,
-  isEventEndOnSlot
-} from '../utils'
+  isEventEndOnSlot,
+} from '../../utils'
 import ReactTooltip from 'react-tooltip'
 
 const HalfAnHourSlot = ({
@@ -45,9 +45,9 @@ const HalfAnHourSlot = ({
     padding: 0,
     width: '100%',
     top: `${Math.floor(((getMinutes(currentTime) % 30) / 30) * 24)}px`,
-    zIndex: 10000
+    zIndex: 10000,
   }
-  const eventStyle = e => {
+  const eventStyle = (e) => {
     return {
       width: `${(100 - 10) / (highestIndex + 1)}%`,
       position: 'absolute',
@@ -56,7 +56,7 @@ const HalfAnHourSlot = ({
       marginTop: `${getMarginTop(e, slotStart)}px`,
       height: `${getHeight(e, slotStart)}px`,
       backgroundColor: e.calprops.bgColor,
-      color: e.calprops.color
+      color: e.calprops.color,
     }
   }
   const getMarginTop = (e, slotStart) => {
@@ -106,7 +106,7 @@ const HalfAnHourSlot = ({
         )}
       {isWithinInterval(currentTime, {
         start: slotStart,
-        end: addMinutes(slotStart, 30)
+        end: addMinutes(slotStart, 30),
       }) ? (
         <hr style={currentTiemBarStyle} />
       ) : (
@@ -124,7 +124,7 @@ const HalfAnHourSlot = ({
                 className={`evnet-basic-slot ${
                   isEventStartOnSlot(e, slotStart) ? 'event-start-slot' : ''
                 } ${isEventEndOnSlot(e, slotStart) ? 'event-end-slot' : ''}`}
-                onMouseDown={event => {
+                onMouseDown={(event) => {
                   event.stopPropagation()
                   onClickEvent(omit(e, 'calprops'))
                 }}
@@ -143,8 +143,16 @@ const HalfAnHourSlot = ({
                         disabledHours
                       )}px`,
                       paddingLeft: '2%',
-                      paddingTop: '1%',
-                      pointerEvents: isEmpty(selectedWindow) ? 'all' : 'none'
+                      paddingTop:
+                        getHightEventDetails(
+                          e.start,
+                          e.end,
+                          slotStart,
+                          disabledHours
+                        ) > 50
+                          ? '1%'
+                          : 0,
+                      pointerEvents: isEmpty(selectedWindow) ? 'all' : 'none',
                     }}
                   >
                     <ReactTooltip

@@ -2,9 +2,9 @@ import React from 'react'
 import { Container } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 import { Context } from './context/Context'
-import Nav from './components/nav/Nav'
-import Views from './components/views/IndexView'
-import { getRandomColor, invertColor } from './components/utils'
+import Nav from './nav/Nav'
+import Views from './views/IndexView'
+import { getRandomColor, invertColor } from './utils'
 
 import 'semantic-ui-css/semantic.min.css'
 import './style/styles.css'
@@ -17,16 +17,16 @@ function Calendar({
   onViewChange,
   defaultView = 'month',
   disabledDays = [],
-  disabledHours = []
+  disabledHours = [],
 }) {
-  const coloredEvent = events.map(e => {
+  const coloredEvent = events.map((e) => {
     const color = getRandomColor()
     return {
       ...e,
       calprops: {
         bgColor: color,
-        color: invertColor(color)
-      }
+        color: invertColor(color),
+      },
     }
   })
   return (
@@ -59,7 +59,7 @@ Calendar.prototype = {
     'Wed',
     'Thu',
     'Fri',
-    'Sat'
+    'Sat',
   ]),
   disabledHours: PropTypes.oneOf([
     0,
@@ -85,8 +85,8 @@ Calendar.prototype = {
     20,
     21,
     22,
-    23
-  ])
+    23,
+  ]),
 }
 
 export default Calendar

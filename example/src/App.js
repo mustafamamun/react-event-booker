@@ -14,8 +14,13 @@ function App() {
     {
       start: new Date('2020-03-29T19:50:00+03:00'),
       end: new Date('2020-03-29T20:10:00+03:00'),
-      title: 'This is a event on mac sdsdfg asdfas asdfsa asfa asdfa asdfasdf'
-    }
+      title: 'This is a event on mac sdsdfg asdfas asdfsa asfa asdfa asdfasdf',
+    },
+    {
+      start: new Date('2020-03-29T19:50:00+03:00'),
+      end: new Date('2020-03-29T20:10:00+03:00'),
+      title: 'This is a event on mac sdsdfg asdfas asdfsa asfasdfa asdfasdf',
+    },
   ]
   return (
     <div className='App'>

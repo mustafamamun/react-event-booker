@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useInterval } from 'react-use'
-import { CalContext } from '../../context/Context'
+import { CalContext } from '../context/Context'
 import Month from './Month'
 import Week from './Week'
 import Day from './Day'

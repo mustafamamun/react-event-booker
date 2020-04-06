@@ -1,7 +1,7 @@
-import React from 'react';
-import { GridRow, GridColumn } from 'semantic-ui-react';
-import { daysInWeek } from '../utils';
-import { getDate, isSameDay } from 'date-fns';
+import React from 'react'
+import { GridRow, GridColumn } from 'semantic-ui-react'
+import { daysInWeek } from '../../utils'
+import { getDate, isSameDay } from 'date-fns'
 
 const WeekRowWithDate = ({ allDates }) => {
   return (
@@ -24,10 +24,10 @@ const WeekRowWithDate = ({ allDates }) => {
               {day}
             </b>
           </GridColumn>
-        );
+        )
       })}
     </GridRow>
-  );
-};
+  )
+}
 
-export default WeekRowWithDate;
+export default WeekRowWithDate
