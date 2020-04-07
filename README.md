@@ -56,7 +56,7 @@ Event based calendar for react that allows disabling specific hour or day.
 | onSelect       | True     | Function | Calback function triggered when selection ends                                                                                                                                               |
 | onClickedEvent | True     | Function | Calback function triggered when selection ends                                                                                                                                               |
 | events         | True     | Array    | Array of event object. Event object = {start: Date , end: Date, title: String }                                                                                                              |
-| default view   | false    | Enum     | One of 'month', 'day', 'week', 'agenda'                                                                                                                                                      |
+| defaultView    | false    | Enum     | One of 'month', 'day', 'week', 'agenda'                                                                                                                                                      |
 | disabledDays   | false    | Array    | Disables the given dates. Value is one or multiple of 'Sun', 'Mon', 'Tue','Wed','Thu','Fri','Sat'. Example: ['Sat', 'Sun']. Event on the disabled days are not shown in the calendar         |
 | disabledHours  | false    | Array    | Disables the given hours of day. One or multiple of 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23. Example: [1,2]. Event on the disabled hours are not shown in the calendar |
 

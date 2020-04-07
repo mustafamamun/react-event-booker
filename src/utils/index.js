@@ -414,6 +414,9 @@ export const getEventWithIndex = (events) => {
       getHighestIndex(eventsWithIndex) + 1 === i
     ) {
       e.calprops.position = i
+      if (events.length > 3 && e.calprops.position > 1) {
+        e.calprops.plusOn = true
+      }
       eventsWithIndex.push(e)
     } else if (getHighestIndex(eventsWithIndex) >= i) {
       const missingIndex = range(eventsWithIndex.length).filter((e, i) => {

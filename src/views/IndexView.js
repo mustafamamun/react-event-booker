@@ -13,7 +13,7 @@ const IndexView = ({ ...props }) => {
   const { view } = useContext(CalContext)
 
   if (view === 'month') {
-    return <Month {...props} />
+    return <Month {...props} currentTime={currentTime} />
   }
   if (view === 'week') {
     return <Week {...props} currentTime={currentTime} />

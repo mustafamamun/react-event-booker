@@ -74,8 +74,6 @@ const Week = ({
   const onClickEvent = (e) => {
     onClickedEvent(e)
   }
-  const mutableEvents = cloneDeep(events)
-
   return (
     <Grid columns={8}>
       <WeekRowWithDate allDates={eachDayInWeek} />
@@ -90,9 +88,8 @@ const Week = ({
           })}
         </GridColumn>
         {eachDayInWeek.map((day) => {
-          const eventsOfTheDay = sortBy(
-            getEventsOfTheDay(day, mutableEvents),
-            'start'
+          const eventsOfTheDay = cloneDeep(
+            sortBy(getEventsOfTheDay(day, events), 'start')
           )
           if (!isEmpty(eventsOfTheDay)) {
             getEventIndex(sortBy(eventsOfTheDay, 'start'), day)
