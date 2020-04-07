@@ -25,6 +25,7 @@ import {
   addDays,
   subWeeks,
   subMonths,
+  differenceInMilliseconds,
 } from 'date-fns'
 import {
   isEmpty,
@@ -446,4 +447,10 @@ export const invertColor = (hexcolor) => {
   const b = parseInt(color.substr(4, 2), 16)
   const yiq = (r * 299 + g * 587 + b * 114) / 1000
   return yiq >= 128 ? 'black' : 'white'
+}
+
+export const getLengthInInterval = (e, window) => {
+  const start = isBefore(e.start, window.start) ? window.start : e.start
+  const end = isBefore(e.end, window.end) ? window.end : e.end
+  return differenceInMilliseconds(end, start)
 }

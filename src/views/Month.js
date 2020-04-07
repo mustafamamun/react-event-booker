@@ -14,7 +14,7 @@ import {
 } from 'date-fns'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import { getDate } from 'date-fns/esm'
-import { isEmpty, get, omit, sortBy, cloneDeep } from 'lodash'
+import { isEmpty, get, omit, sortBy, cloneDeep, reverse } from 'lodash'
 import ReactTooltip from 'react-tooltip'
 
 import WeekRow from '../components/week-row/WeekRow'
@@ -31,6 +31,7 @@ import {
   getHighestIndex,
   addOneWeek,
   getEventOfTheWindow,
+  getLengthInInterval,
 } from '../utils'
 
 const Month = ({
@@ -151,9 +152,13 @@ const Month = ({
 
           return eachDay.map((day) => {
             const date = getDate(day)
-            const eventsOfTheDay = sortBy(
-              getEventsOfTheDay(day, eventsOfTheWeek),
-              'start'
+            const eventsOfTheDay = reverse(
+              sortBy(getEventsOfTheDay(day, eventsOfTheWeek), (e) => {
+                return getLengthInInterval(e, {
+                  start: week,
+                  end: endOfWeek(week),
+                })
+              })
             )
             if (!isEmpty(eventsOfTheDay)) {
               getEventWithIndex(eventsOfTheDay)
