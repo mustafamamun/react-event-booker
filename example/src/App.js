@@ -12,25 +12,95 @@ function App() {
   const onViewChange = () => {}
   const events = [
     {
-      start: new Date('2020-04-06T11:50:00+03:00'),
-      end: new Date('2020-04-06T17:30:00+03:00'),
-      title: 'A Lorem Ipsum is simply ',
+      start: new Date('2020-04-13T11:50:00+03:00'),
+      end: new Date('2020-04-14T17:30:00+03:00'),
+      title: 'D Lorem Ipsum is simply '
     },
     {
-      start: new Date('2020-04-06T11:50:00+03:00'),
-      end: new Date('2020-04-07T17:30:00+03:00'),
-      title: 'B Lorem Ipsum is simply ',
+      start: new Date('2020-04-14T11:50:00+03:00'),
+      end: new Date('2020-04-15T17:30:00+03:00'),
+      title: 'D Lorem Ipsum is simply '
     },
     {
-      start: new Date('2020-04-06T11:50:00+03:00'),
-      end: new Date('2020-04-06T17:30:00+03:00'),
-      title: 'C Lorem Ipsum is simply ',
+      start: new Date('2020-04-15T11:50:00+03:00'),
+      end: new Date('2020-04-15T17:30:00+03:00'),
+      title: 'Z Lorem Ipsum is simply '
     },
     {
-      start: new Date('2020-04-06T11:50:00+03:00'),
-      end: new Date('2020-04-13T17:30:00+03:00'),
-      title: 'C Lorem Ipsum is simply ',
+      start: new Date('2020-04-16T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'F Lorem Ipsum is simply '
     },
+    {
+      start: new Date('2020-04-16T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-14T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-12T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'F Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-16T11:50:00+03:00'),
+      end: new Date('2020-04-18T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-17T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-13T11:50:00+03:00'),
+      end: new Date('2020-04-14T17:30:00+03:00'),
+      title: 'D Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-14T11:50:00+03:00'),
+      end: new Date('2020-04-15T17:30:00+03:00'),
+      title: 'D Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-15T11:50:00+03:00'),
+      end: new Date('2020-04-15T17:30:00+03:00'),
+      title: 'Z Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-16T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'F Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-16T11:50:00+03:00'),
+      end: new Date('2020-04-17T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-14T11:50:00+03:00'),
+      end: new Date('2020-04-19T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-12T11:50:00+03:00'),
+      end: new Date('2020-04-30T17:30:00+03:00'),
+      title: 'F Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-18T11:50:00+03:00'),
+      end: new Date('2020-04-26T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    },
+    {
+      start: new Date('2020-04-17T11:50:00+03:00'),
+      end: new Date('2020-04-25T17:30:00+03:00'),
+      title: 'G Lorem Ipsum is simply '
+    }
   ]
   return (
     <div className='App'>

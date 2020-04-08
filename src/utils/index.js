@@ -26,6 +26,7 @@ import {
   subWeeks,
   subMonths,
   differenceInMilliseconds,
+  getOverlappingDaysInIntervals
 } from 'date-fns'
 import {
   isEmpty,
@@ -37,6 +38,7 @@ import {
   range,
   find,
   get,
+  cloneDeep
 } from 'lodash'
 
 export const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -48,7 +50,7 @@ export const daysFullInWeek = [
   'Wednesday',
   'Thursday',
   'Friday',
-  'Saturday',
+  'Saturday'
 ]
 
 export const months = [
@@ -63,7 +65,7 @@ export const months = [
   'September',
   'October',
   'November',
-  'December',
+  'December'
 ]
 
 export const timeSlots = [
@@ -90,11 +92,11 @@ export const timeSlots = [
   '20:00',
   '21:00',
   '22:00',
-  '23:00',
+  '23:00'
 ]
 
 export const colors = {
-  warning: '#f07810',
+  warning: '#f07810'
 }
 export const addOneWeek = (date) => addWeeks(date, 1)
 export const addOneMonth = (date) => addMonths(date, 1)
@@ -291,7 +293,7 @@ export const isEventStartOnDay = (e, day) => {
     isSameMinute(startOfDay(day), e.start) ||
     isWithinInterval(e.start, {
       start: startOfDay(day),
-      end: endOfDay(day),
+      end: endOfDay(day)
     })
   )
 }
@@ -301,7 +303,7 @@ export const isEventEndOnDay = (e, day) => {
     isSameMinute(endOfDay(day), e.end) ||
     isWithinInterval(e.end, {
       start: startOfDay(day),
-      end: endOfDay(day),
+      end: endOfDay(day)
     })
   )
 }
@@ -350,7 +352,7 @@ export const getEventWidth = (day, e, dayWidth, disabledDays) => {
     compact([
       findDistanceToNextDisableDay(day, disabledDays),
       findDistanceToEndofWeek(day),
-      findDistanceToEndofEvent(e, day),
+      findDistanceToEndofEvent(e, day)
     ])
   )[0]
   return (dayWidth - 20) * distance
@@ -376,7 +378,7 @@ export const isEventStartOnSlot = (e, slotStart) => {
     isSameSecond(slotStart, e.start) ||
     isWithinInterval(e.start, {
       start: slotStart,
-      end: addMinutes(slotStart, 30),
+      end: addMinutes(slotStart, 30)
     })
   )
 }
@@ -385,13 +387,13 @@ export const isEventEndOnSlot = (e, slotStart) => {
     isSameSecond(addMinutes(slotStart, 30), e.end) ||
     isWithinInterval(e.end, {
       start: slotStart,
-      end: addMinutes(slotStart, 30),
+      end: addMinutes(slotStart, 30)
     })
   )
 }
 
-export const getEventWithIndex = (events) => {
-  const eventsWithIndex = []
+export const getEventWithIndex = (events, eventsOfTheWeek = []) => {
+  const localEventsWithIndex = []
   const getHighestIndex = (events) => {
     return get(
       events.reduce((prev, current) =>
@@ -405,29 +407,52 @@ export const getEventWithIndex = (events) => {
   }
 
   events.forEach((e, i) => {
-    if (e.calprops.position) {
-      eventsWithIndex.push(e)
-    } else if (eventsWithIndex.length === 0) {
-      e.calprops.position = 0
-      eventsWithIndex.push(e)
-    } else if (
-      eventsWithIndex.length === i &&
-      getHighestIndex(eventsWithIndex) + 1 === i
+    if (
+      e.calprops.position === 0
+        ? e.calprops.position.toString()
+        : e.calprops.position
     ) {
-      e.calprops.position = i
-      if (events.length > 3 && e.calprops.position > 1) {
-        e.calprops.plusOn = true
+      localEventsWithIndex.push(e)
+    } else {
+      if (!find(events, (e) => e.calprops.position === i)) {
+        e.calprops.position = i
+        localEventsWithIndex.push(e)
+      } else {
+        const eventsWithIndex = events.filter(
+          (e) => e.calprops.position || e.calprops.position === 0
+        )
+        const highesIndex = getHighestIndex(eventsWithIndex)
+        if (eventsWithIndex.length <= highesIndex) {
+          const missingIndex = range(highesIndex).filter((e, i) => {
+            return !find(eventsWithIndex, (iE) => {
+              return iE.calprops.position === e
+            })
+          })
+          e.calprops.position = missingIndex[0]
+          localEventsWithIndex.push(e)
+        } else {
+          e.calprops.position = highesIndex + 1
+          localEventsWithIndex.push(e)
+        }
       }
-      eventsWithIndex.push(e)
-    } else if (getHighestIndex(eventsWithIndex) >= i) {
-      const missingIndex = range(eventsWithIndex.length).filter((e, i) => {
-        return !find(eventsWithIndex, (iE) => {
-          return iE.calprops.position === e
-        })
-      })
-      e.calprops.position = missingIndex[0]
-      eventsWithIndex.push(e)
     }
+    if (
+      getOverlappingEvents(e, eventsOfTheWeek).length >= 3 &&
+      e.calprops.position > 1
+    ) {
+      e.calprops.plusOn = true
+    }
+  })
+}
+
+const getOverlappingEvents = (e, weekEvents) => {
+  return weekEvents.filter((we) => {
+    return (
+      isWithinInterval(e.start, { start: we.start, end: we.end }) ||
+      isWithinInterval(e.end, { start: we.start, end: we.end }) ||
+      isWithinInterval(we.start, { start: e.start, end: e.end }) ||
+      isWithinInterval(we.end, { start: e.start, end: e.end })
+    )
   })
 }
 

@@ -10,7 +10,7 @@ import {
   isValid,
   format,
   eachWeekOfInterval,
-  endOfWeek,
+  endOfWeek
 } from 'date-fns'
 import { Grid, GridColumn, GridRow } from 'semantic-ui-react'
 import { getDate } from 'date-fns/esm'
@@ -31,7 +31,7 @@ import {
   getHighestIndex,
   addOneWeek,
   getEventOfTheWindow,
-  getLengthInInterval,
+  getLengthInInterval
 } from '../utils'
 
 const Month = ({
@@ -39,7 +39,7 @@ const Month = ({
   events,
   onSelect,
   onClickedEvent,
-  disabledDays = [],
+  disabledDays = []
 }) => {
   const { viewWindow, setViewWindow, setView } = useContext(CalContext)
   const [dayWidth, setDayWidth] = useState(0)
@@ -50,7 +50,7 @@ const Month = ({
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
         start: new Date(e.target.id),
-        end: endOfDay(new Date(e.target.id)),
+        end: endOfDay(new Date(e.target.id))
       })
     }
   }
@@ -68,7 +68,7 @@ const Month = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfDay(new Date(e.target.id)),
+        end: endOfDay(new Date(e.target.id))
       })
     }
     if (
@@ -78,7 +78,7 @@ const Month = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfDay(selectedWindow.start),
+        end: endOfDay(selectedWindow.start)
       })
     }
   }
@@ -130,7 +130,7 @@ const Month = ({
       width: !isSameDay(e.end, day) ? '102%' : '92%',
       backgroundColor: e.calprops.bgColor,
       top: `${(150 / 4) * e.calprops.position + 10}px`,
-      color: e.calprops.color,
+      color: e.calprops.color
     }
   }
 
@@ -140,28 +140,31 @@ const Month = ({
       <GridRow className={'pt-0'}>
         {eachWeek.map((week, i) => {
           const eventsOfTheWeek = cloneDeep(
-            getEventOfTheWindow(events, {
-              start: week,
-              end: endOfWeek(week),
-            })
+            reverse(
+              sortBy(
+                getEventOfTheWindow(events, {
+                  start: week,
+                  end: endOfWeek(week)
+                }),
+                (e) => {
+                  return getLengthInInterval(e, {
+                    start: week,
+                    end: endOfWeek(week)
+                  })
+                }
+              )
+            )
           )
           const eachDay = eachDayOfInterval({
             start: week,
-            end: endOfWeek(week),
+            end: endOfWeek(week)
           })
 
           return eachDay.map((day) => {
             const date = getDate(day)
-            const eventsOfTheDay = reverse(
-              sortBy(getEventsOfTheDay(day, eventsOfTheWeek), (e) => {
-                return getLengthInInterval(e, {
-                  start: week,
-                  end: endOfWeek(week),
-                })
-              })
-            )
+            const eventsOfTheDay = getEventsOfTheDay(day, eventsOfTheWeek)
             if (!isEmpty(eventsOfTheDay)) {
-              getEventWithIndex(eventsOfTheDay)
+              getEventWithIndex(eventsOfTheDay, eventsOfTheWeek)
             }
             const heighestIndex =
               getHighestIndex(eventsOfTheDay) <= 2
@@ -220,7 +223,7 @@ const Month = ({
                                   e,
                                   dayWidth,
                                   disabledDays
-                                )}px`,
+                                )}px`
                               }}
                             >
                               <ReactTooltip
