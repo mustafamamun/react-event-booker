@@ -1,5 +1,12 @@
 {
   "name": "react-event-booker",
+  "keywords": [
+    "react",
+    "booking calendar",
+    "calendar",
+    "disable hour",
+    "disable day"
+  ],
   "version": "0.0.2",
   "description": "Simple react calendar",
   "author": "mustafamamun",
