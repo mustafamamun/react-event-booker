@@ -4,14 +4,14 @@ Event based calendar for react that allows disabling specific hour or day.
 
 # Setup
 
-    npm install react-calendar-basic
-    yarn add react-calendar-basic
+    npm install react-event-booker
+    yarn add react-event-booker
 
 ## Use
 
     import React from  'react'
-    import Calendar from  'react-calendar-basic'
-    import  'react-calendar-basic/dist/style/styles.css'
+    import Calendar from  'react-event-booker'
+    import  'react-event-booker/dist/style/styles.css'
 
     function  App() {
     	const  onClickedEvent  =  e  =>  {

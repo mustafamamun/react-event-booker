@@ -1,10 +1,10 @@
 {
-  "name": "react-calendar-basic",
-  "version": "0.0.21",
+  "name": "react-event-booker",
+  "version": "0.0.1",
   "description": "Simple react calendar",
   "author": "mustafamamun",
   "license": "MIT",
-  "repository": "mustafamamun/react-calendar-basic",
+  "repository": "mustafamamun/react-event-booker",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",

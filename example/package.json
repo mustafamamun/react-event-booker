@@ -1,6 +1,6 @@
 {
-  "name": "react-calendar-basic",
-  "homepage": "https://mustafamamun.github.io/react-calendar-basic",
+  "name": "react-event-booker",
+  "homepage": "https://mustafamamun.github.io/react-event-booker",
   "version": "1.0.0",
   "license": "MIT",
   "private": false,
@@ -8,7 +8,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "react-calendar-basic": "link:..",
+    "react-event-booker": "link:..",
     "react-scripts": "^1.1.4",
     "webpack-dev-server": "^3.10.3"
   },

@@ -451,6 +451,6 @@ export const invertColor = (hexcolor) => {
 
 export const getLengthInInterval = (e, window) => {
   const start = isBefore(e.start, window.start) ? window.start : e.start
-  const end = isBefore(e.end, window.end) ? window.end : e.end
+  const end = isAfter(e.end, window.end) ? window.end : e.end
   return differenceInMilliseconds(end, start)
 }
