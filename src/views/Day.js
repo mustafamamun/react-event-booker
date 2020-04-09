@@ -9,7 +9,7 @@ import {
   timeSlots,
   getEventsOfTheDay,
   getEventIndex,
-  getHighestIndex,
+  getHighestIndex
 } from '../utils'
 
 const Day = ({
@@ -18,16 +18,17 @@ const Day = ({
   onSelect,
   onClickedEvent,
   disabledDays = [],
-  disabledHours = [],
+  disabledHours = []
 }) => {
   const { viewWindow } = useContext(CalContext)
   const [selectedWindow, setSelectedWindow] = useState({})
+  const [hoveredSlot, setHoverdSlot] = useState(null)
   const onMouseClick = (e) => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
         start: new Date(e.target.id),
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
       })
     }
   }
@@ -38,7 +39,14 @@ const Day = ({
     }
   }
 
+  const onMouseOut = () => {
+    if (hoveredSlot) setHoverdSlot(null)
+  }
+
   const onMouseOver = (e) => {
+    if (isEmpty(selectedWindow)) {
+      setHoverdSlot(e.target.id)
+    }
     if (
       !isEmpty(selectedWindow) &&
       isValid(new Date(e.target.id)) &&
@@ -46,7 +54,7 @@ const Day = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
       })
     }
     if (
@@ -56,7 +64,7 @@ const Day = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(selectedWindow.start, 29)),
+        end: endOfMinute(addMinutes(selectedWindow.start, 29))
       })
     }
   }
@@ -109,6 +117,8 @@ const Day = ({
             highestIndex={highestIndex}
             disabledDays={disabledDays}
             disabledHours={disabledHours}
+            hoveredSlot={hoveredSlot}
+            onMouseOut={onMouseOut}
           />
         </GridColumn>
       </GridRow>

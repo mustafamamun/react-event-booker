@@ -5,7 +5,7 @@ import {
   isBefore,
   isSameDay,
   endOfMinute,
-  isValid,
+  isValid
 } from 'date-fns'
 import { isEmpty, cloneDeep, sortBy } from 'lodash'
 
@@ -16,7 +16,7 @@ import {
   timeSlots,
   getEventsOfTheDay,
   getEventIndex,
-  getHighestIndex,
+  getHighestIndex
 } from '../utils'
 import TimeSlotsInDay from '../components/time-slots-in-day/TimeSlotsInDay'
 
@@ -26,22 +26,23 @@ const Week = ({
   onSelect,
   onClickedEvent,
   disabledDays = [],
-  disabledHours = [],
+  disabledHours = []
 }) => {
   const { viewWindow } = useContext(CalContext)
   const [selectedWindow, setSelectedWindow] = useState({})
+  const [hoveredSlot, setHoverdSlot] = useState(null)
   const onMouseClick = (e) => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
         start: new Date(e.target.id),
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
       })
     }
   }
   const eachDayInWeek = eachDayOfInterval({
     start: viewWindow.start,
-    end: viewWindow.end,
+    end: viewWindow.end
   })
   const onMouseUp = (e) => {
     if (!isEmpty(selectedWindow)) {
@@ -49,7 +50,14 @@ const Week = ({
       setSelectedWindow({})
     }
   }
+  const onMouseOut = () => {
+    if (hoveredSlot) setHoverdSlot(null)
+  }
+
   const onMouseOver = (e) => {
+    if (isEmpty(selectedWindow)) {
+      setHoverdSlot(e.target.id)
+    }
     if (
       !isEmpty(selectedWindow) &&
       isValid(new Date(e.target.id)) &&
@@ -57,7 +65,7 @@ const Week = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(new Date(e.target.id), 29)),
+        end: endOfMinute(addMinutes(new Date(e.target.id), 29))
       })
     }
     if (
@@ -67,7 +75,7 @@ const Week = ({
     ) {
       setSelectedWindow({
         ...selectedWindow,
-        end: endOfMinute(addMinutes(selectedWindow.start, 29)),
+        end: endOfMinute(addMinutes(selectedWindow.start, 29))
       })
     }
   }
@@ -114,6 +122,8 @@ const Week = ({
                 highestIndex={highestIndex}
                 disabledDays={disabledDays}
                 disabledHours={disabledHours}
+                hoveredSlot={hoveredSlot}
+                onMouseOut={onMouseOut}
               />
             </GridColumn>
           )

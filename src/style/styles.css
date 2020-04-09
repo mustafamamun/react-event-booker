@@ -118,6 +118,10 @@
   color: white;
 }
 
+.hovered {
+  background-color: grey;
+}
+
 .show-selection {
   text-align: center;
   color: white;

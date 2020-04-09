@@ -9,42 +9,46 @@ Event based calendar for react that allows disabling specific hour or day.
 
 ## Use
 
-    import React from  'react'
-    import Calendar from  'react-event-booker'
-    import  'react-event-booker/dist/style/styles.css'
+```js
+import React from 'react'
+import Calendar from 'react-event-booker'
+import 'react-event-booker/dist/style/styles.css'
 
-    function  App() {
-    	const  onClickedEvent  =  e  =>  {
-    		console.log(e)
-    	}
-    	const  onSelect  =  e  =>  {
-    		console.log(e)
-    	}
-    	const  onNavigation  =  e  =>  {
-    		console.log(e)
-    	}
-    	const  onViewChange  =  e  =>  {
-    		console.log(e)
-    	}
-    	const  events  =  [{
-    		start:  new  Date('2020-03-31T19:50:00+03:00'),
-    		end:  new  Date('2020-03-31T21:10:00+03:00'),
-    		title:  'Example event'
-    		}]
-    	return (
-    		<div  className='App'>
-    			<Calendar
-    			defaultView={'month'}
-    			onNavigation={onNavigation}
-    			onViewChange={onViewChange}
-    			events={events}
-    			onSelect={onSelect}
-    			onClickedEvent={onClickedEvent}
-    			/>
-    		</div>
-    		)
+function App() {
+  const onClickedEvent = (e) => {
+    console.log(e)
+  }
+  const onSelect = (e) => {
+    console.log(e)
+  }
+  const onNavigation = (e) => {
+    console.log(e)
+  }
+  const onViewChange = (e) => {
+    console.log(e)
+  }
+  const events = [
+    {
+      start: new Date('2020-03-31T19:50:00+03:00'),
+      end: new Date('2020-03-31T21:10:00+03:00'),
+      title: 'Example event'
     }
-    export  default  App
+  ]
+  return (
+    <div className='App'>
+      <Calendar
+        defaultView={'month'}
+        onNavigation={onNavigation}
+        onViewChange={onViewChange}
+        events={events}
+        onSelect={onSelect}
+        onClickedEvent={onClickedEvent}
+      />
+    </div>
+  )
+}
+export default App
+```
 
 # Props
 

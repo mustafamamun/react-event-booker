@@ -29,7 +29,6 @@ import {
   ifDayIsInDisabledArray,
   getEventWithIndex,
   getHighestIndex,
-  addOneWeek,
   getEventOfTheWindow,
   getLengthInInterval
 } from '../utils'
@@ -45,6 +44,7 @@ const Month = ({
   const [dayWidth, setDayWidth] = useState(0)
   const eachWeek = eachWeekOfInterval({ ...viewWindow })
   const [selectedWindow, setSelectedWindow] = useState({})
+  const [hoverdDay, setHoverdDay] = useState(null)
   const onMouseClick = (e) => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
@@ -60,7 +60,13 @@ const Month = ({
       setSelectedWindow({})
     }
   }
+  const onMouseOut = (e) => {
+    if (hoverdDay) setHoverdDay(null)
+  }
   const onMouseOver = (e) => {
+    if (isEmpty(selectedWindow)) {
+      setHoverdDay(e.target.id)
+    }
     if (
       !isEmpty(selectedWindow) &&
       isValid(new Date(e.target.id)) &&
@@ -133,6 +139,21 @@ const Month = ({
       color: e.calprops.color
     }
   }
+  const dayDivClass = (day) => {
+    return `p-0 month-day ${
+      isDayDisabled(day, disabledDays, currentTime) ? 'disable' : ''
+    }
+      ${
+        ifSlotSelected(startOfDay(day)) &&
+        !isDayDisabled(day, disabledDays, currentTime)
+          ? 'selected'
+          : isSameDay(day, new Date())
+          ? 'same-day-month'
+          : ''
+      }
+      ${isSameDay(day, new Date(hoverdDay)) ? 'hovered' : ''}
+      `
+  }
 
   return (
     <Grid columns={7}>
@@ -179,21 +200,11 @@ const Month = ({
                 as={'div'}
                 key={day.toString()}
                 id={day.toString()}
-                className={`p-0 month-day ${
-                  isDayDisabled(day, disabledDays, currentTime) ? 'disable' : ''
-                }
-                  ${
-                    ifSlotSelected(startOfDay(day)) &&
-                    !isDayDisabled(day, disabledDays, currentTime)
-                      ? 'selected'
-                      : isSameDay(day, new Date())
-                      ? 'same-day-month'
-                      : ''
-                  }
-                  `}
+                className={dayDivClass(day)}
                 onMouseDown={onMouseClick}
                 onMouseOver={onMouseOver}
                 onMouseUp={onMouseUp}
+                onMouseOut={onMouseOut}
               >
                 <b>{date < 10 ? `0${date}` : date}</b>
                 {!ifDayIsInDisabledArray(disabledDays, day) && (

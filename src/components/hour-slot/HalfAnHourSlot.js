@@ -5,7 +5,7 @@ import {
   format,
   isWithinInterval,
   addMinutes,
-  differenceInMinutes,
+  differenceInMinutes
 } from 'date-fns'
 import { omit, isEmpty } from 'lodash'
 
@@ -18,7 +18,7 @@ import {
   ifSlotIsInDisabledTime,
   showEventData,
   isEventStartOnSlot,
-  isEventEndOnSlot,
+  isEventEndOnSlot
 } from '../../utils'
 import ReactTooltip from 'react-tooltip'
 
@@ -45,7 +45,7 @@ const HalfAnHourSlot = ({
     padding: 0,
     width: '100%',
     top: `${Math.floor(((getMinutes(currentTime) % 30) / 30) * 24)}px`,
-    zIndex: 10000,
+    zIndex: 10000
   }
   const eventStyle = (e) => {
     return {
@@ -56,7 +56,7 @@ const HalfAnHourSlot = ({
       marginTop: `${getMarginTop(e, slotStart)}px`,
       height: `${getHeight(e, slotStart)}px`,
       backgroundColor: e.calprops.bgColor,
-      color: e.calprops.color,
+      color: e.calprops.color
     }
   }
   const getMarginTop = (e, slotStart) => {
@@ -88,6 +88,7 @@ const HalfAnHourSlot = ({
         : 26
     }
   }
+
   const eventsOfTheSlot = getEventOfTheSlot(slotStart, events)
   return (
     <div {...rest} onMouseOver={onMouseOver} id={id}>
@@ -106,7 +107,7 @@ const HalfAnHourSlot = ({
         )}
       {isWithinInterval(currentTime, {
         start: slotStart,
-        end: addMinutes(slotStart, 30),
+        end: addMinutes(slotStart, 30)
       }) ? (
         <hr style={currentTiemBarStyle} />
       ) : (
@@ -152,7 +153,7 @@ const HalfAnHourSlot = ({
                         ) > 50
                           ? '1%'
                           : 0,
-                      pointerEvents: isEmpty(selectedWindow) ? 'all' : 'none',
+                      pointerEvents: isEmpty(selectedWindow) ? 'all' : 'none'
                     }}
                   >
                     <ReactTooltip

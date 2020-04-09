@@ -1,5 +1,11 @@
 import React from 'react'
-import { addHours, startOfMinute, addMinutes, subHours } from 'date-fns'
+import {
+  addHours,
+  startOfMinute,
+  addMinutes,
+  subHours,
+  isSameMinute
+} from 'date-fns'
 import HalfAnHourSlot from './HalfAnHourSlot'
 import { isSlotDisabled } from '../../utils'
 
@@ -16,6 +22,8 @@ const HourSlot = ({
   highestIndex,
   disabledDays,
   disabledHours,
+  hoveredSlot,
+  onMouseOut
 }) => {
   const startTZO = day.getTimezoneOffset()
   const endDate = addHours(day, hour)
@@ -35,19 +43,17 @@ const HourSlot = ({
   if (startTZO > endTZO && zoneOffsetBefore !== endTZO) {
     return <div className={'dst-div'}>DST HOUR</div>
   }
+  const getClassName = (initial, startHour) => {
+    return `${initial} ${
+      isSlotDisabled(startHour, currentTime, disabledDays, disabledHours)
+        ? 'disable'
+        : ''
+    } ${isSameMinute(startHour, new Date(hoveredSlot)) ? 'hovered' : ''}`
+  }
   return (
     <div>
       <HalfAnHourSlot
-        className={`first-half-an-hour ${
-          isSlotDisabled(
-            firstSlotStartHour,
-            currentTime,
-            disabledDays,
-            disabledHours
-          )
-            ? 'disable'
-            : ''
-        }`}
+        className={getClassName('first-half-an-hour', firstSlotStartHour)}
         id={firstSlotStartHour.toString()}
         onMouseDown={onMouseClick}
         onMouseOver={onMouseOver}
@@ -60,18 +66,10 @@ const HourSlot = ({
         highestIndex={highestIndex}
         disabledDays={disabledDays}
         disabledHours={disabledHours}
+        onMouseOut={onMouseOut}
       />
       <HalfAnHourSlot
-        className={`last-half-an-hour ${
-          isSlotDisabled(
-            secondSlotStartHour,
-            currentTime,
-            disabledDays,
-            disabledHours
-          )
-            ? 'disable'
-            : ''
-        }`}
+        className={getClassName('last-half-an-hour', secondSlotStartHour)}
         id={secondSlotStartHour.toString()}
         onMouseDown={onMouseClick}
         onMouseOver={onMouseOver}
@@ -84,6 +82,7 @@ const HourSlot = ({
         highestIndex={highestIndex}
         disabledDays={disabledDays}
         disabledHours={disabledHours}
+        onMouseOut={onMouseOut}
       />
     </div>
   )
