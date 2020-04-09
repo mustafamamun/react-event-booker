@@ -1,3 +1,6 @@
+<h1 style="color:red">Note</h1>
+<span style="color:red">This component only suports react version 16.8.0 or later</span>
+
 # Intro
 
 Event based calendar for react that allows disabling specific hour or day.
@@ -72,6 +75,6 @@ export default App
 
 # Release Note
 
-### Version 0.0.2
+### Version 0.0.4
 
-1. Moth view position calculation corrected
+1. Shows active slot when hovered
