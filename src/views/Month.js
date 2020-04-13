@@ -45,7 +45,7 @@ const Month = ({
   const eachWeek = eachWeekOfInterval({ ...viewWindow })
   const [selectedWindow, setSelectedWindow] = useState({})
   const [hoverdDay, setHoverdDay] = useState(null)
-  const onMouseClick = (e) => {
+  const onMouseClick = e => {
     e.preventDefault()
     if (isEmpty(selectedWindow) && isValid(new Date(e.target.id))) {
       setSelectedWindow({
@@ -54,16 +54,16 @@ const Month = ({
       })
     }
   }
-  const onMouseUp = (e) => {
+  const onMouseUp = e => {
     if (!isEmpty(selectedWindow)) {
       onSelect(selectedWindow)
       setSelectedWindow({})
     }
   }
-  const onMouseOut = (e) => {
+  const onMouseOut = e => {
     if (hoverdDay) setHoverdDay(null)
   }
-  const onMouseOver = (e) => {
+  const onMouseOver = e => {
     if (isEmpty(selectedWindow)) {
       setHoverdDay(e.target.id)
     }
@@ -113,7 +113,7 @@ const Month = ({
     )
   }
 
-  const ifSlotSelected = (slotStart) => {
+  const ifSlotSelected = slotStart => {
     return (
       !isEmpty(selectedWindow) &&
       (isSameMinute(slotStart, selectedWindow.start) ||
@@ -122,12 +122,12 @@ const Month = ({
     )
   }
 
-  const onMoreClicked = (day) => {
+  const onMoreClicked = day => {
     setViewWindow({ start: startOfDay(day), end: endOfDay(day) })
     setView('day')
   }
 
-  const onEventClicked = (e) => {
+  const onEventClicked = e => {
     onClickedEvent(e)
   }
 
@@ -139,7 +139,7 @@ const Month = ({
       color: e.calprops.color
     }
   }
-  const dayDivClass = (day) => {
+  const dayDivClass = day => {
     return `p-0 month-day ${
       isDayDisabled(day, disabledDays, currentTime) ? 'disable' : ''
     }
@@ -167,7 +167,7 @@ const Month = ({
                   start: week,
                   end: endOfWeek(week)
                 }),
-                (e) => {
+                e => {
                   return getLengthInInterval(e, {
                     start: week,
                     end: endOfWeek(week)
@@ -181,7 +181,7 @@ const Month = ({
             end: endOfWeek(week)
           })
 
-          return eachDay.map((day) => {
+          return eachDay.map(day => {
             const date = getDate(day)
             const eventsOfTheDay = getEventsOfTheDay(day, eventsOfTheWeek)
             if (!isEmpty(eventsOfTheDay)) {
@@ -192,7 +192,7 @@ const Month = ({
                 ? getHighestIndex(eventsOfTheDay)
                 : 1
             const eventToShow = eventsOfTheDay.filter(
-              (e) => e.calprops.position <= heighestIndex && !e.calprops.plusOn
+              e => e.calprops.position <= heighestIndex && !e.calprops.plusOn
             )
             const remainingEvents = eventsOfTheDay.length - eventToShow.length
             return (
@@ -212,7 +212,7 @@ const Month = ({
                     {eventToShow.map((e, i) => {
                       return (
                         <div
-                          onMouseDown={(event) => {
+                          onMouseDown={event => {
                             event.stopPropagation()
                             onEventClicked(omit(e, 'calprops'))
                           }}
@@ -255,17 +255,18 @@ const Month = ({
                     })}
                   </div>
                 )}
-                {remainingEvents > 0 && (
-                  <div
-                    className={'more-events-link'}
-                    onMouseDown={(event) => {
-                      event.stopPropagation()
-                      onMoreClicked(day)
-                    }}
-                  >
-                    + {remainingEvents} more events
-                  </div>
-                )}
+                {remainingEvents > 0 &&
+                  !ifDayIsInDisabledArray(disabledDays, day) && (
+                    <div
+                      className={'more-events-link'}
+                      onMouseDown={event => {
+                        event.stopPropagation()
+                        onMoreClicked(day)
+                      }}
+                    >
+                      + {remainingEvents} more events
+                    </div>
+                  )}
               </GridColumn>
             )
           })

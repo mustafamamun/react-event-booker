@@ -18,16 +18,16 @@ import Calendar from 'react-event-booker'
 import 'react-event-booker/dist/style/styles.css'
 
 function App() {
-  const onClickedEvent = (e) => {
+  const onClickedEvent = e => {
     console.log(e)
   }
-  const onSelect = (e) => {
+  const onSelect = e => {
     console.log(e)
   }
-  const onNavigation = (e) => {
+  const onNavigation = e => {
     console.log(e)
   }
-  const onViewChange = (e) => {
+  const onViewChange = e => {
     console.log(e)
   }
   const events = [
@@ -66,15 +66,15 @@ export default App
 | defaultView    | false    | Enum     | One of 'month', 'day', 'week', 'agenda'                                                                                                                                                      |
 | disabledDays   | false    | Array    | Disables the given dates. Value is one or multiple of 'Sun', 'Mon', 'Tue','Wed','Thu','Fri','Sat'. Example: ['Sat', 'Sun']. Event on the disabled days are not shown in the calendar         |
 | disabledHours  | false    | Array    | Disables the given hours of day. One or multiple of 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23. Example: [1,2]. Event on the disabled hours are not shown in the calendar |
+| weekends       | false    | Array    | Remove the given days from work week view. Mandatory to get the work week working. The weekends days has to be in serial. Example ['Sat', 'Sun'] or ['Fri', 'Sat']                           |
 
 # TO DO
 
-1. Add work week.
-2. Take style input from user. However user can always overwrite the css classes.
-3. Add type def for typescript
+1. Take style input from user. However user can always overwrite the css classes.
+2. Add type def for typescript
 
 # Release Note
 
-### Version 0.0.4
+### Version 0.0.5
 
-1. Shows active slot when hovered
+1. Added the work week view

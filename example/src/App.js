@@ -105,12 +105,15 @@ function App() {
   return (
     <div className='App'>
       <Calendar
-        defaultView={'week'}
+        defaultView={'work-week'}
         onNavigation={onNavigation}
         onViewChange={onViewChange}
         events={events}
         onSelect={onSelect}
         onClickedEvent={onClickedEvent}
+        disabledDays={['Sat', 'Sun', 'Mon']}
+        disabledHours={[0]}
+        weekends={['Sun', 'Sat']}
       />
     </div>
   )

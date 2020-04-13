@@ -37,8 +37,7 @@ import {
   sortBy,
   range,
   find,
-  get,
-  cloneDeep
+  get
 } from 'lodash'
 
 export const daysInWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -95,18 +94,45 @@ export const timeSlots = [
   '23:00'
 ]
 
+export const hours = [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23
+]
+
 export const colors = {
   warning: '#f07810'
 }
-export const addOneWeek = (date) => addWeeks(date, 1)
-export const addOneMonth = (date) => addMonths(date, 1)
-export const addOneDay = (date) => addDays(date, 1)
-export const subOneWeek = (date) => subWeeks(date, 1)
-export const subOneMonth = (date) => subMonths(date, 1)
-export const subOneDay = (date) => subDays(date, 1)
+export const addOneWeek = date => addWeeks(date, 1)
+export const addOneMonth = date => addMonths(date, 1)
+export const addOneDay = date => addDays(date, 1)
+export const subOneWeek = date => subWeeks(date, 1)
+export const subOneMonth = date => subMonths(date, 1)
+export const subOneDay = date => subDays(date, 1)
 
 export const getEventsOfTheDay = (day, events) => {
-  return events.filter((e) => {
+  return events.filter(e => {
     return (
       isSameSecond(day, e.start) ||
       (isAfter(startOfDay(day), e.start) &&
@@ -120,7 +146,7 @@ export const getEventsOfTheDay = (day, events) => {
 }
 
 export const getEventOfTheWindow = (events, window) => {
-  return events.filter((e) => {
+  return events.filter(e => {
     return (
       isSameSecond(window.start, e.start) ||
       (isAfter(window.start, e.start) &&
@@ -144,7 +170,7 @@ export const getEventIndex = (events, day) => {
   }
 }
 
-export const getHighestIndex = (e) => {
+export const getHighestIndex = e => {
   return isEmpty(e)
     ? 0
     : e.reduce((prev, current) =>
@@ -154,7 +180,7 @@ export const getHighestIndex = (e) => {
 
 export const getEventOfTheSlot = (slotStart, events) => {
   const slotEnd = endOfMinute(addMinutes(slotStart, 29))
-  return events.filter((e) => {
+  return events.filter(e => {
     return (
       isSameSecond(slotStart, e.start) ||
       (isAfter(slotStart, e.start) &&
@@ -169,7 +195,7 @@ export const getEventOfTheSlot = (slotStart, events) => {
   })
 }
 
-export const addLeadingZero = (value) => {
+export const addLeadingZero = value => {
   return value >= 10 ? value : `0${value}`
 }
 
@@ -178,7 +204,7 @@ export const getEventEndTimeForDay = (e, slotStart, disabledHours) => {
   let dayEnd
   let eventEnd
   const nextDisableHour = sortBy(disabledHours).filter(
-    (i) => i > getHours(slotStart)
+    i => i > getHours(slotStart)
   )[0]
   if (nextDisableHour) {
     disableHour = `${addLeadingZero(nextDisableHour)} : 00`
@@ -211,7 +237,7 @@ export const getHightEventDetails = (start, end, slotStart, disabledHours) => {
   let diffToDisableHour
   const startTime = isBefore(start, slotStart) ? slotStart : start
   const nextDisableHour = sortBy(disabledHours).filter(
-    (i) => i > getHours(slotStart)
+    i => i > getHours(slotStart)
   )[0]
   if (nextDisableHour) {
     diffToDisableHour =
@@ -330,16 +356,16 @@ export const findDistanceToNextDisableDay = (day, disabledDays) => {
     return null
   }
   const sortedDisabledDaysIndex = disabledDays
-    .map((i) => indexOf(daysInWeek, i))
+    .map(i => indexOf(daysInWeek, i))
     .sort()
-  const nextDisableDays = sortedDisabledDaysIndex.filter((i) => i > getDay(day))
+  const nextDisableDays = sortedDisabledDaysIndex.filter(i => i > getDay(day))
   if (isEmpty(nextDisableDays)) {
     return null
   }
   return nextDisableDays[0] - getDay(day)
 }
 
-export const findDistanceToEndofWeek = (day) => {
+export const findDistanceToEndofWeek = day => {
   return getDay(endOfWeek(day)) - getDay(day) + 1
 }
 
@@ -394,7 +420,7 @@ export const isEventEndOnSlot = (e, slotStart) => {
 
 export const getEventWithIndex = (events, eventsOfTheWeek = []) => {
   const localEventsWithIndex = []
-  const getHighestIndex = (events) => {
+  const getHighestIndex = events => {
     return get(
       events.reduce((prev, current) =>
         get(prev, 'calprops.position', 0) > get(current, 'calprops.position', 0)
@@ -414,17 +440,17 @@ export const getEventWithIndex = (events, eventsOfTheWeek = []) => {
     ) {
       localEventsWithIndex.push(e)
     } else {
-      if (!find(events, (e) => e.calprops.position === i)) {
+      if (!find(events, e => e.calprops.position === i)) {
         e.calprops.position = i
         localEventsWithIndex.push(e)
       } else {
         const eventsWithIndex = events.filter(
-          (e) => e.calprops.position || e.calprops.position === 0
+          e => e.calprops.position || e.calprops.position === 0
         )
         const highesIndex = getHighestIndex(eventsWithIndex)
         if (eventsWithIndex.length <= highesIndex) {
           const missingIndex = range(highesIndex).filter((e, i) => {
-            return !find(eventsWithIndex, (iE) => {
+            return !find(eventsWithIndex, iE => {
               return iE.calprops.position === e
             })
           })
@@ -446,7 +472,7 @@ export const getEventWithIndex = (events, eventsOfTheWeek = []) => {
 }
 
 const getOverlappingEvents = (e, weekEvents) => {
-  return weekEvents.filter((we) => {
+  return weekEvents.filter(we => {
     return (
       isWithinInterval(e.start, { start: we.start, end: we.end }) ||
       isWithinInterval(e.end, { start: we.start, end: we.end }) ||
@@ -465,7 +491,7 @@ export const getRandomColor = () => {
   return color
 }
 
-export const invertColor = (hexcolor) => {
+export const invertColor = hexcolor => {
   const color = hexcolor.substring(1)
   const r = parseInt(color.substr(0, 2), 16)
   const g = parseInt(color.substr(2, 2), 16)
@@ -478,4 +504,16 @@ export const getLengthInInterval = (e, window) => {
   const start = isBefore(e.start, window.start) ? window.start : e.start
   const end = isAfter(e.end, window.end) ? window.end : e.end
   return differenceInMilliseconds(end, start)
+}
+
+export const getFirstDayOfTheWeek = weekEnds => {
+  if (isEmpty(weekEnds)) {
+    return 0
+  }
+  return indexOf(
+    daysInWeek,
+    find(daysInWeek, day => {
+      return !includes(weekEnds, day)
+    })
+  )
 }
